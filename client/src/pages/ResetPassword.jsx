@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { authService } from '../services/authService';
 
 const ResetPassword = () => {
@@ -8,6 +10,7 @@ const ResetPassword = () => {
   const token = searchParams.get('token');
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async ({ password }) => {
     if (!token) return toast.error('Missing or invalid reset token');
@@ -36,14 +39,25 @@ const ResetPassword = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <div>
             <label className="label">New password</label>
-            <input
-              type="password"
-              className="input"
-              {...register('password', {
-                required: 'Password is required',
-                minLength: { value: 6, message: 'At least 6 characters' },
-              })}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="input pr-10"
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: { value: 6, message: 'At least 6 characters' },
+                })}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-ink/40 hover:text-ink/70 dark:text-paper/40 dark:hover:text-paper/70"
+                tabIndex={-1}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <HiOutlineEyeSlash size={18} /> : <HiOutlineEye size={18} />}
+              </button>
+            </div>
             {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>}
           </div>
           <button disabled={isSubmitting || !token} className="btn-primary w-full">
