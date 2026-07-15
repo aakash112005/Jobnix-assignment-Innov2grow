@@ -80,8 +80,7 @@ Demo accounts after seeding:
 | Role | Email | Password |
 |---|---|---|
 | Admin | admin@jobportal.com | Password123 |
-| Employer | employer@jobportal.com | Password123 |
-| Candidate | candidate@jobportal.com | Password123 |
+
 
 ### 2. Frontend
 
