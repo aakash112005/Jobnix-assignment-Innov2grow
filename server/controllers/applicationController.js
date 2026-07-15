@@ -65,8 +65,47 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
   if (status) {
     await sendEmail({
       to: application.candidate.email,
-      subject: `Application update: ${job.title}`,
-      html: `<p>Hi ${application.candidate.name}, your application status for <strong>${job.title}</strong> is now: <strong>${status}</strong>.</p>`,
+      subject: `Application Update: ${job.title}`,
+html: `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1f2937;">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h1 style="color: #2563eb; margin: 0;">Job Nix</h1>
+    </div>
+
+    <h2 style="color: #111827;">Application Status Update</h2>
+
+    <p style="font-size: 15px; line-height: 1.6;">
+      Hi ${application.candidate.name},
+    </p>
+
+    <p style="font-size: 15px; line-height: 1.6;">
+      There's an update on your application for <strong>${job.title}</strong> at <strong>${job.company}</strong>.
+    </p>
+
+    <div style="text-align: center; margin: 24px 0;">
+      <span style="display: inline-block; background-color: #eff6ff; color: #2563eb; font-weight: bold; font-size: 14px; text-transform: capitalize; padding: 8px 20px; border-radius: 999px;">
+        ${status}
+      </span>
+    </div>
+
+    <div style="text-align: center; margin: 32px 0;">
+      <a href="${process.env.CLIENT_URL}/dashboard/applications"
+         style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; display: inline-block;">
+        View Application Details
+      </a>
+    </div>
+
+    <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
+      If you have any questions about this update, feel free to reply to this email.
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;" />
+
+    <p style="font-size: 12px; color: #9ca3af; text-align: center;">
+      © ${new Date().getFullYear()} Job Nix. All rights reserved.
+    </p>
+  </div>
+`,
     });
   }
 

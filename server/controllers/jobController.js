@@ -139,8 +139,46 @@ const applyToJob = asyncHandler(async (req, res) => {
 
   await sendEmail({
     to: candidate.email,
-    subject: `Application submitted: ${job.title}`,
-    html: `<p>Your application for <strong>${job.title}</strong> at ${job.company} was submitted successfully.</p>`,
+    subject: `Application Submitted: ${job.title}`,
+html: `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1f2937;">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h1 style="color: #2563eb; margin: 0;">Job Nix</h1>
+    </div>
+
+    <h2 style="color: #111827;">Application Submitted ✅</h2>
+
+    <p style="font-size: 15px; line-height: 1.6;">
+      Your application for <strong>${job.title}</strong> at <strong>${job.company}</strong> has been submitted successfully.
+    </p>
+
+    <div style="background-color: #f9fafb; border-radius: 8px; padding: 16px; margin: 24px 0;">
+      <p style="margin: 0; font-size: 14px; color: #374151;"><strong>Position:</strong> ${job.title}</p>
+      <p style="margin: 8px 0 0; font-size: 14px; color: #374151;"><strong>Company:</strong> ${job.company}</p>
+    </div>
+
+    <p style="font-size: 15px; line-height: 1.6;">
+      The employer will review your application, and you'll be notified here if there's any update on your status.
+    </p>
+
+    <div style="text-align: center; margin: 32px 0;">
+      <a href="${process.env.CLIENT_URL}/dashboard/applications"
+         style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; display: inline-block;">
+        Track Your Applications
+      </a>
+    </div>
+
+    <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
+      Good luck! If you have any questions, just reply to this email — we're happy to help.
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;" />
+
+    <p style="font-size: 12px; color: #9ca3af; text-align: center;">
+      © ${new Date().getFullYear()} Job Nix. All rights reserved.
+    </p>
+  </div>
+`,
   });
 
   res.status(201).json({ success: true, message: 'Application submitted', data: application });
