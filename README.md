@@ -10,6 +10,9 @@ Portal with Job Aggregation" brief.
 
 ---
 
+vercel: https://jobnix-assignment-innov2grow.vercel.app
+render : https://jobnix-assignment-innov2grow.onrender.com
+
 ## Tech stack
 
 **Frontend:** React 18 + Vite, Tailwind CSS, React Router DOM, Redux Toolkit,
