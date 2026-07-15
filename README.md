@@ -1,4 +1,4 @@
-# Hirable — AI-Ready Job Portal (MERN Stack)
+# Jobnix — AI-Ready Job Portal (MERN Stack)
 
 A full-stack job portal with candidate/employer/admin roles, JWT auth with
 refresh-token rotation, job search & filtering, applications, a public-API
@@ -151,6 +151,7 @@ Full request/response detail is in Swagger (`/api-docs`) and
 | POST | `/scrape/jobs` | Private (admin) |
 | GET/POST | `/companies` | Public / Private (employer) |
 | GET/DELETE | `/users` | Private (admin) |
+| PUT | `/users/:id/status` | Private (admin) |
 
 ---
 

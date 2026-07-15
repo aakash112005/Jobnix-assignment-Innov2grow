@@ -4,10 +4,10 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:5000/api" },
-    { "key": "accessToken", "value": "" },
-    { "key": "jobId", "value": "" }
-  ],
+  { "key": "baseUrl", "value": "https://jobnix-assignment-innov2grow.onrender.com/api" },
+  { "key": "accessToken", "value": "" },
+  { "key": "jobId", "value": "" }
+],
   "item": [
     {
       "name": "Auth",
