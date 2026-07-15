@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper text-ink font-body antialiased;
+}
+
+.dark body {
+  @apply bg-ink text-paper;
+}
+
+::selection {
+  background-color: theme('colors.accent.300');
+  color: theme('colors.ink');
+}
+
+/* Focus visibility for keyboard users */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid theme('colors.primary.500');
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface dark:bg-surface-dark rounded-2xl shadow-soft border border-black/5 dark:border-white/5;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary-500 px-5 py-2.5 font-semibold text-white shadow-soft transition hover:bg-primary-600 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-5 py-2.5 font-semibold text-ink dark:text-paper transition hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98];
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent-400 px-5 py-2.5 font-semibold text-ink shadow-soft transition hover:bg-accent-500 active:scale-[0.98];
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-black/10 dark:border-white/15 bg-surface dark:bg-surface-dark px-4 py-2.5 text-sm outline-none transition focus:border-primary-400 placeholder:text-ink/40 dark:placeholder:text-paper/40;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink/70 dark:text-paper/70;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full bg-primary-50 dark:bg-primary-900/40 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary-200;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-black/5 dark:bg-white/10;
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "info": {
+    "name": "AI-Ready Job Portal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "accessToken", "value": "" },
+    { "key": "jobId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alex Candidate\",\n  \"email\": \"candidate@jobportal.com\",\n  \"password\": \"Password123\",\n  \"role\": \"candidate\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"candidate@jobportal.com\",\n  \"password\": \"Password123\"\n}"
+            }
+          }
+        },
+        { "name": "Refresh Token", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" } },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/auth/logout"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/forgot-password",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"candidate@jobportal.com\"\n}" }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/reset-password",
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"<from email>\",\n  \"password\": \"NewPassword123\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/profile",
+            "body": { "mode": "raw", "raw": "{\n  \"bio\": \"Full stack engineer\",\n  \"skills\": [\"React\", \"Node.js\"]\n}" }
+          }
+        },
+        {
+          "name": "Upload Resume",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/profile/resume",
+            "body": { "mode": "formdata", "formdata": [{ "key": "resume", "type": "file", "src": "" }] }
+          }
+        },
+        {
+          "name": "Get Saved Jobs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/profile/saved-jobs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        { "name": "Get All Jobs", "request": { "method": "GET", "url": "{{baseUrl}}/jobs?search=react&location=remote&page=1&limit=10&sort=-createdAt" } },
+        { "name": "Get Job By Id", "request": { "method": "GET", "url": "{{baseUrl}}/jobs/{{jobId}}" } },
+        {
+          "name": "Create Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/jobs",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Senior Frontend Engineer\",\n  \"company\": \"NovaTech Labs\",\n  \"location\": \"Remote\",\n  \"workMode\": \"remote\",\n  \"employmentType\": \"full-time\",\n  \"salaryMin\": 90000,\n  \"salaryMax\": 130000,\n  \"skills\": [\"React\", \"TypeScript\"],\n  \"description\": \"Own our frontend architecture.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Job",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"salaryMax\": 140000\n}" }
+          }
+        },
+        {
+          "name": "Delete Job",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}"
+          }
+        },
+        {
+          "name": "Close Job",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/close"
+          }
+        },
+        {
+          "name": "Apply to Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
+            "body": { "mode": "formdata", "formdata": [{ "key": "resume", "type": "file", "src": "" }, { "key": "coverLetter", "value": "I'd love to join!" }] }
+          }
+        },
+        {
+          "name": "Get Job Applicants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/applicants"
+          }
+        },
+        {
+          "name": "Save Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/save"
+          }
+        },
+        {
+          "name": "Unsave Job",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/save"
+          }
+        },
+        {
+          "name": "Get My Jobs (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/jobs/mine"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "item": [
+        {
+          "name": "Get Applications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/applications"
+          }
+        },
+        {
+          "name": "Update Application Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/applications/:id",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"shortlisted\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        { "name": "Get Companies", "request": { "method": "GET", "url": "{{baseUrl}}/companies" } },
+        { "name": "Get Company By Id", "request": { "method": "GET", "url": "{{baseUrl}}/companies/:id" } },
+        {
+          "name": "Create/Update My Company",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/companies",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"NovaTech Labs\",\n  \"industry\": \"Software\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard (role-based)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/dashboard"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scraper",
+      "item": [
+        {
+          "name": "Trigger Scrape",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/scrape/jobs",
+            "body": { "mode": "raw", "raw": "{\n  \"search\": \"engineer\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/users"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/users/:id"
+          }
+        },
+        {
+          "name": "Toggle User Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/users/:id/status"
+          }
+        }
+      ]
+    }
+  ]
+}
